@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Império do Cuscuz — Tradição Nordestina</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     TOPBAR
+═══════════════════════════════════ -->
+<div class="topbar">
+  🛵 <strong>Frete grátis</strong> em pedidos acima de R$ 35 · Entrega em até <strong>45 minutos</strong> · Ilhéus e região
+</div>
+
+<!-- ═══════════════════════════════════
+     NAVBAR
+═══════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="logo-wrap" href="#">
+      <span class="logo-desde">✦ Desde 2018 ✦</span>
+      <span class="logo-titulo">Império do Cuscuz</span>
+      <span class="logo-sub">Tradição Nordestina</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#cardapio"     onclick="navScroll(event,'cardapio')">Cardápio</a></li>
+      <li><a href="#sobre"        onclick="navScroll(event,'sobre')">Sobre nós</a></li>
+      <li><a href="#depoimentos"  onclick="navScroll(event,'depoimentos')">Avaliações</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-pedido-nav" onclick="navScroll(event,'cardapio')">Ver Cardápio</button>
+      <div class="cart-icon" onclick="openCart()" title="Ver carrinho">
+        🛒
+        <span class="cart-count" id="cart-count">0</span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════
+     HERO
+     Para adicionar imagem de fundo:
+     1. Salve em imagens/hero/hero-bg.jpg
+     2. Adicione a classe "com-imagem" na div abaixo
+═══════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-circles">
+    <div class="hc hc1"></div>
+    <div class="hc hc2"></div>
+    <div class="hc hc3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-logo-box">
+      <span class="hero-logo-pre">✦ Tradição Nordestina ✦</span>
+      <span class="hero-logo-main">Império</span>
+      <span class="hero-logo-do">do</span>
+      <span class="hero-logo-cuscuz">Cuscuz</span>
+      <div class="hero-ornamento">
+        <div class="hero-ornamento-line"></div>
+        <span>Desde 2018</span>
+        <div class="hero-ornamento-line"></div>
+      </div>
+    </div>
+    <p class="hero-desc">
+      Receitas passadas de geração em geração, feitas com fubá de milho
+      selecionado e os melhores ingredientes do sertão nordestino.
+    </p>
+    <div class="hero-ctas">
+      <button class="btn-hero-main" onclick="scrollToMenu()">🍽️ Fazer Pedido</button>
+      <button class="btn-hero-sec"  onclick="navScroll(event,'cardapio')">Ver Cardápio</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">4.9</span>
+        <span class="stat-label">⭐ Avaliação</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">35</span>
+        <span class="stat-label">⏱ min entrega</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">800+</span>
+        <span class="stat-label">😊 Clientes</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     BANDA DESLIZANTE
+═══════════════════════════════════ -->
+<div class="divider-band">
+  <div class="divider-scroll">
+    <span class="divider-item">Cuscuz Tradicional com Queijo</span>
+    <span class="divider-item">Cuscuz de Calabresa com Mussarela</span>
+    <span class="divider-item">Cuscuz de Carne Seca com Banana</span>
+    <span class="divider-item">Cuscuz de Carne do Sol</span>
+    <span class="divider-item">Cuscuz Romeu e Julieta</span>
+    <span class="divider-item">Cuscuz com Coco e Mel</span>
+    <span class="divider-item">Cuscuz no Pote</span>
+    <span class="divider-item">Tradição Nordestina</span>
+    <!-- Repetir para loop contínuo -->
+    <span class="divider-item">Cuscuz Tradicional com Queijo</span>
+    <span class="divider-item">Cuscuz de Calabresa com Mussarela</span>
+    <span class="divider-item">Cuscuz de Carne Seca com Banana</span>
+    <span class="divider-item">Cuscuz de Carne do Sol</span>
+    <span class="divider-item">Cuscuz Romeu e Julieta</span>
+    <span class="divider-item">Cuscuz com Coco e Mel</span>
+    <span class="divider-item">Cuscuz no Pote</span>
+    <span class="divider-item">Tradição Nordestina</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     CARDÁPIO
+═══════════════════════════════════ -->
+<section id="cardapio">
+  <div class="section-header">
+    <div class="section-eyebrow">Nosso Cardápio</div>
+    <h2>Escolha o seu <em>favorito</em></h2>
+    <p>Do cuscuz da manhã ao jantar especial, temos opções para todos os gostos e momentos</p>
+  </div>
+
+  <!-- Filtros de categoria -->
+  <div class="cats-grid">
+    <div class="cat-card active" onclick="filterCat(this,'todos')">
+      <span class="cat-emoji">🌽</span>
+      <span class="cat-name">Todos</span>
+      <span class="cat-count">12 opções</span>
+    </div>
+    <div class="cat-card" onclick="filterCat(this,'salgado')">
+      <span class="cat-emoji">🍳</span>
+      <span class="cat-name">Salgados</span>
+      <span class="cat-count">6 opções</span>
+    </div>
+    <div class="cat-card" onclick="filterCat(this,'especial')">
+      <span class="cat-emoji">👑</span>
+      <span class="cat-name">Especiais</span>
+      <span class="cat-count">2 opções</span>
+    </div>
+    <div class="cat-card" onclick="filterCat(this,'doce')">
+      <span class="cat-emoji">🍯</span>
+      <span class="cat-name">Doces</span>
+      <span class="cat-count">2 opções</span>
+    </div>
+    <div class="cat-card" onclick="filterCat(this,'pote')">
+      <span class="cat-emoji">🥣</span>
+      <span class="cat-name">No Pote</span>
+      <span class="cat-count">3 opções</span>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────
+       GRADE DE PRODUTOS
+       
+       Para adicionar foto a um produto:
+       1. Salve a foto em imagens/produtos/nome-do-arquivo.jpg
+       2. Dentro de .card-photo, adicione:
+          <img src="imagens/produtos/nome.jpg" alt="Nome do produto">
+       3. Remova a classe photo-bg-X da div se quiser fundo transparente
+  ──────────────────────────────────── -->
+  <div class="menu-grid" id="menu-grid">
+
+    <!-- ══ PRODUTO 1 ══
+         Foto: imagens/produtos/cuscuz-queijo.jpg -->
+    <div class="menu-card" data-cat="salgado">
+      <div class="card-photo photo-bg-1">
+        <!-- TROQUE A FOTO AQUI ↓ -->
+        <img src="imagens/produtos/cuscuz-queijo.jpg" alt="Cuscuz Tradicional com Queijo">
+        
+        <span class="card-badge gold">Mais Pedido</span>
+        <button class="card-fav" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+      </div>
+      <div class="card-info">
+        <h3>Cuscuz Tradicional com Queijo</h3>
+        <p class="card-desc">O clássico cuscuz de milho no vapor, finalizado com generosa camada de queijo derretido.</p>
+        <div class="card-tags">
+          <span class="ctag">🌽 Milho</span>
+          <span class="ctag">🧀 Queijo</span>
+          <span class="ctag">Clássico</span>
+        </div>
+        <div class="card-footer-row">
+          <span class="price-por"><small>R$</small> 12,00</span>
+          <button class="add-btn" onclick="addItem('Cuscuz Tradicional com Queijo', 12.00, '🌽')">+ Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PRODUTO 2 ══
+         Foto: imagens/produtos/cuscuz-calabresa.jpg -->
+    <div class="menu-card" data-cat="salgado">
+      <div class="card-photo photo-bg-2">
+        <img src="imagens/produtos/cuscuz-calabresa.jpg" alt="Cuscuz de Calabresa com Mussarela">
+        <span class="card-badge">Favorito</span>
+        <button class="card-fav" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+      </div>
+      <div class="card-info">
+        <h3>Cuscuz de Calabresa com Mussarela</h3>
+        <p class="card-desc">Cuscuz recheado com calabresa suculenta e coberto com mussarela derretida.</p>
+        <div class="card-tags">
+          <span class="ctag">🌭 Calabresa</span>
+          <span class="ctag">🧀 Mussarela</span>
+          <span class="ctag">Farto</span>
+        </div>
+        <div class="card-footer-row">
+          <span class="price-por"><small>R$</small> 18,00</span>
+          <button class="add-btn" onclick="addItem('Cuscuz de Calabresa com Mussarela', 18.00, '🌭')">+ Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PRODUTO 3 ══
+         Foto: imagens/produtos/cuscuz-carne-seca.jpg -->
+    <div class="menu-card" data-cat="especial">
+      <div class="card-photo photo-bg-3">
+        <img src="imagens/produtos/cuscuz-carne-seca.jpg" alt="Carne Seca com Banana e Mussarela">
+        <span class="card-badge">Especial</span>
+        <button class="card-fav" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+      </div>
+      <div class="card-info">
+        <h3>Carne Seca com Banana e Mussarela</h3>
+        <p class="card-desc">Carne seca desfiada, banana caramelizada e mussarela gratinada. Combinação perfeita!</p>
+        <div class="card-tags">
+          <span class="ctag">🥩 Carne Seca</span>
+          <span class="ctag">🍌 Banana</span>
+          <span class="ctag">🧀 Mussarela</span>
+        </div>
+        <div class="card-footer-row">
+          <span class="price-por"><small>R$</small> 20,00</span>
+          <button class="add-btn" onclick="addItem('Cuscuz de Carne Seca com Banana e Mussarela', 20.00, '🥩')">+ Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PRODUTO 4 ══
+         Foto: imagens/produtos/cuscuz-carne-sol.jpg -->
+    <div class="menu-card" data-cat="especial">
+      <div class="card-photo photo-bg-4">
+        <img src="imagens/produtos/cuscuz-carne-sol.jpg" alt="Cuscuz de Carne do Sol">
+        <span class="card-badge" style="background:var(--marrom-soft)">Premium</span>
+        <button class="card-fav" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+      </div>
+      <div class="card-info">
+        <h3>Cuscuz de Carne do Sol</h3>
+        <p class="card-desc">Carne do sol macia e bem temperada sobre cuscuz quentinho. Sabor genuíno do sertão nordestino.</p>
+        <div class="card-tags">
+          <span class="ctag">🍖 Carne do Sol</span>
+          <span class="ctag">🌾 Artesanal</span>
+          <span class="ctag">Nordestino</span>
+        </div>
+        <div class="card-footer-row">
+          <span class="price-por"><small>R$</small> 22,00</span>
+          <button class="add-btn" onclick="addItem('Cuscuz de Carne do Sol', 22.00, '🍖')">+ Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PRODUTO 5 ══
+         Foto: imagens/produtos/cuscuz-carne-sol-vinagrete.jpg -->
+    <div class="menu-card" data-cat="salgado">
+      <div class="card-photo photo-bg-6">
+        <img src="imagens/produtos/cuscuz-carne-sol-vinagrete.jpg" alt="Carne do Sol com Vinagrete">
+        <button class="card-fav" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+      </div>
+      <div class="card-info">
+        <h3>Carne do Sol com Vinagrete</h3>
+        <p class="card-desc">Carne do sol suculenta com vinagrete fresco de tomate, cebola e coentro. Refrescante!</p>
+        <div class="card-tags">
+          <span class="ctag">🍖 Carne do Sol</span>
+          <span class="ctag">🍅 Vinagrete</span>
+          <span class="ctag">Refrescante</span>
+        </div>
+        <div class="card-footer-row">
+          <span class="price-por"><small>R$</small> 26,00</span>
+          <button class="add-btn" onclick="addItem('Cuscuz de Carne do Sol com Vinagrete', 26.00, '🍖')">+ Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PRODUTO 6 ══
+         Foto: imagens/produtos/cuscuz-romeu-julieta.jpg -->
+    <div class="menu-card" data-cat="doce">
+      <div class="card-photo photo-bg-5">
+        <img src="imagens/produtos/cuscuz-romeu-julieta.jpg" alt="Cuscuz Romeu e Julieta">
+        <span class="card-badge" style="background:#7B3F00">Romeu e Julieta</span>
+        <button class="card-fav" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+      </div>
+      <div class="card-info">
+        <h3>Cuscuz Romeu e Julieta</h3>
+        <p class="card-desc">Cuscuz levemente adocicado com goiabada cremosa e queijo coalho. Um clássico!</p>
+        <div class="card-tags">
+          <span class="ctag">🍑 Goiabada</span>
+          <span class="ctag">🧀 Queijo Coalho</span>
+          <span class="ctag">Doce</span>
+        </div>
+        <div class="card-footer-row">
+          <span class="price-por"><small>R$</small> 16,00</span>
+          <button class="add-btn" onclick="addItem('Cuscuz Romeu e Julieta', 16.00, '🧀')">+ Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PRODUTO 9 ══
+         Foto: imagens/produtos/cuscuz-ovo-manteiga.jpg -->
+    <div class="menu-card" data-cat="salgado">
+      <div class="card-photo photo-bg-2">
+        <img src="imagens/produtos/cuscuz-ovo-manteiga.jpg" alt="Cuscuz com Ovo e Manteiga">
+        <button class="card-fav" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+      </div>
+      <div class="card-info">
+        <h3>Cuscuz com Ovo e Manteiga</h3>
+        <p class="card-desc">O básico que nunca decepciona: cuscuz quentinho com manteiga derretida e ovo mexido.</p>
+        <div class="card-tags">
+          <span class="ctag">🥚 Ovo</span>
+          <span class="ctag">🧈 Manteiga</span>
+          <span class="ctag">Clássico</span>
+        </div>
+        <div class="card-footer-row">
+          <span class="price-por"><small>R$</small> 15,00</span>
+          <button class="add-btn" onclick="addItem('Cuscuz com Ovo e Manteiga', 15.00, '🥚')">+ Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PRODUTO 10 ══
+         Foto: imagens/produtos/pote-carne-seca.jpg -->
+    <div class="menu-card" data-cat="pote">
+      <div class="card-photo photo-bg-3">
+        <img src="imagens/produtos/pote-carne-seca.jpg" alt="Pote de Carne Seca com Banana e Queijo">
+        <span class="card-badge" style="background:#5D4037">No Pote</span>
+        <button class="card-fav" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+      </div>
+      <div class="card-info">
+        <h3>Pote de Carne Seca com Banana e Queijo</h3>
+        <p class="card-desc">Pote de 350g com cuscuz, carne seca desfiada, banana e queijo. Prático e farto!</p>
+        <div class="card-tags">
+          <span class="ctag">🥣 350g</span>
+          <span class="ctag">🥩 Carne Seca</span>
+          <span class="ctag">🍌 Banana</span>
+        </div>
+        <div class="card-footer-row">
+          <span class="price-por"><small>R$</small> 13,00</span>
+          <button class="add-btn" onclick="addItem('Pote de Carne Seca com Banana e Queijo', 13.00, '🥣')">+ Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PRODUTO 11 ══
+         Foto: imagens/produtos/pote-calabresa.jpg -->
+    <div class="menu-card" data-cat="pote">
+      <div class="card-photo photo-bg-2">
+        <img src="imagens/produtos/pote-calabresa.jpg" alt="Pote de Calabresa e Queijo">
+        <span class="card-badge" style="background:#5D4037">No Pote</span>
+        <button class="card-fav" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+      </div>
+      <div class="card-info">
+        <h3>Pote de Calabresa e Queijo</h3>
+        <p class="card-desc">Pote de cuscuz com calabresa temperada e queijo. Ideal para levar e comer em qualquer lugar.</p>
+        <div class="card-tags">
+          <span class="ctag">🥣 Pote</span>
+          <span class="ctag">🌭 Calabresa</span>
+          <span class="ctag">🧀 Queijo</span>
+        </div>
+        <div class="card-footer-row">
+          <span class="price-por"><small>R$</small> 13,00</span>
+          <button class="add-btn" onclick="addItem('Pote de Calabresa e Queijo', 13.00, '🥣')">+ Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PRODUTO 12 ══
+         Foto: imagens/produtos/pote-carne-sol.jpg -->
+    <div class="menu-card" data-cat="pote">
+      <div class="card-photo photo-bg-4">
+        <img src="imagens/produtos/pote-carne-sol.jpg" alt="Pote de Carne do Sol">
+        <span class="card-badge" style="background:#5D4037">No Pote</span>
+        <button class="card-fav" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+      </div>
+      <div class="card-info">
+        <h3>Pote de Carne do Sol</h3>
+        <p class="card-desc">Cuscuz no pote com carne do sol macia e suculenta. Prático para levar em qualquer hora.</p>
+        <div class="card-tags">
+          <span class="ctag">🥣 Pote</span>
+          <span class="ctag">🍖 Carne do Sol</span>
+          <span class="ctag">Nordestino</span>
+        </div>
+        <div class="card-footer-row">
+          <span class="price-por"><small>R$</small> 15,00</span>
+          <button class="add-btn" onclick="addItem('Pote de Carne do Sol', 15.00, '🥣')">+ Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══ PRODUTO POTE TAPIOCA ══
+         Foto: imagens/produtos/pote-cuscuz-Tapioca.jpg -->
+    <div class="menu-card" data-cat="pote">
+      <div class="card-photo photo-bg-3">
+        <img src="imagens/produtos/pote-cuscuz-Tapioca.jpg" alt="Pote Cuscuz Tapioca">
+        <span class="card-badge" style="background:#5D4037">No Pote</span>
+        <button class="card-fav" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+      </div>
+      <div class="card-info">
+        <h3>Pote Cuscuz Tapioca</h3>
+        <p class="card-desc">Pote de cuscuz com tapioca cremosa. Leve, saboroso e perfeito para qualquer hora.</p>
+        <div class="card-tags">
+          <span class="ctag">🥣 Pote</span>
+          <span class="ctag">Tapioca</span>
+        </div>
+        <div class="card-footer-row">
+          <span class="price-por"><small>R$</small> 15,00</span>
+          <button class="add-btn" onclick="addItem('Pote Cuscuz Tapioca', 15.00, '🥣')">+ Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- fim menu-grid -->
+</section>
+
+<!-- ═══════════════════════════════════
+     BANNER CUPOM
+═══════════════════════════════════ -->
+<div class="banner-wrap">
+  <div class="banner-especial">
+    <div class="banner-text">
+      <h2>Primeira vez? <em>10% off</em> no seu pedido</h2>
+      <p>Use o cupom abaixo e aproveite o melhor cuscuz de Ilhéus com desconto especial.</p>
+      <div class="banner-cupom">
+        <div class="cupom-box">NORDESTE10</div>
+        <button class="copy-btn" onclick="copyCupom()">📋 Copiar</button>
+      </div>
+    </div>
+    <div class="banner-emoji">🌽</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     DIFERENCIAIS
+═══════════════════════════════════ -->
+<div class="dif-bg">
+  <section>
+    <div class="section-header">
+      <div class="section-eyebrow">Por que nos escolher</div>
+      <h2>A diferença está no <em>sabor</em></h2>
+    </div>
+    <div class="diferenciais-grid">
+      <div class="dif-card">
+        <div class="dif-icon">🌾</div>
+        <h4>Receita Artesanal</h4>
+        <p>Fubá de milho selecionado e métodos tradicionais passados de geração em geração.</p>
+      </div>
+      <div class="dif-card">
+        <div class="dif-icon">🔥</div>
+        <h4>Feito na Hora</h4>
+        <p>Seu cuscuz é preparado somente após o pedido, garantindo frescor e sabor incomparáveis.</p>
+      </div>
+      <div class="dif-card">
+        <div class="dif-icon">🛵</div>
+        <h4>Entrega Rápida</h4>
+        <p>Entregamos em até 45 minutos em Ilhéus e região. Seu pedido chega quentinho!</p>
+      </div>
+      <div class="dif-card">
+        <div class="dif-icon">💚</div>
+        <h4>Ingredientes Naturais</h4>
+        <p>Sem conservantes, sem aditivos. Apenas o que a natureza oferece de melhor.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════
+     DEPOIMENTOS
+═══════════════════════════════════ -->
+<div id="depoimentos" style="background: var(--areia);">
+  <section style="padding: 64px 20px;">
+    <div class="section-header">
+      <div class="section-eyebrow">Clientes Satisfeitos</div>
+      <h2>O que dizem sobre <em>a gente</em></h2>
+    </div>
+    <div class="depoimentos-grid">
+      <div class="depo-card">
+        <div class="quote-mark">"</div>
+        <div class="depo-stars">★★★★★</div>
+        <p class="depo-text">O melhor cuscuz que já comi fora de casa! Chegou quentinho e o sabor me trouxe memórias da infância no Ceará.</p>
+        <div class="depo-author">
+          <div class="depo-avatar">👩</div>
+          <div>
+            <div class="depo-name">Maria das Graças</div>
+            <div class="depo-loc">📍 Ilhéus, BA</div>
+          </div>
+        </div>
+      </div>
+      <div class="depo-card">
+        <div class="quote-mark">"</div>
+        <div class="depo-stars">★★★★★</div>
+        <p class="depo-text">Pedi o combo família e foi um sucesso. O cuscuz de camarão então... perfeito demais! Entrega super rápida.</p>
+        <div class="depo-author">
+          <div class="depo-avatar">👨</div>
+          <div>
+            <div class="depo-name">João Batista</div>
+            <div class="depo-loc">📍 Itabuna, BA</div>
+          </div>
+        </div>
+      </div>
+      <div class="depo-card">
+        <div class="quote-mark">"</div>
+        <div class="depo-stars">★★★★★</div>
+        <p class="depo-text">Finalmente achei um lugar que faz cuscuz do jeito nordestino de verdade aqui na Bahia. Vou sempre pedir!</p>
+        <div class="depo-author">
+          <div class="depo-avatar">👩</div>
+          <div>
+            <div class="depo-name">Ana Flávia</div>
+            <div class="depo-loc">📍 Ilhéus, BA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════
+     FOOTER
+═══════════════════════════════════ -->
+<footer id="sobre">
+  <div class="footer-top">
+    <div class="footer-brand-col">
+      <span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--ouro);font-weight:600">✦ Desde 2018 ✦</span>
+      <span class="footer-brand-title">Império do Cuscuz</span>
+      <p>Levando a tradição do cuscuz nordestino para a mesa de cada família. Feito com amor, ingredientes naturais e a alma do Nordeste.</p>
+      <div class="footer-social">
+        <div class="soc-btn">📸</div>
+        <div class="soc-btn">📘</div>
+        <div class="soc-btn">🐦</div>
+        <a href="https://wa.me/5573991731767" target="_blank" class="soc-btn">💬</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Cardápio</h4>
+      <ul>
+        <li><a href="#">Cuscuz Salgados</a></li>
+        <li><a href="#">Cuscuz Especiais</a></li>
+        <li><a href="#">Cuscuz Doces</a></li>
+        <li><a href="#">Combos</a></li>
+        <li><a href="#">Bebidas</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>A Empresa</h4>
+      <ul>
+        <li><a href="#">Nossa história</a></li>
+        <li><a href="#">Ingredientes</a></li>
+        <li><a href="#">Trabalhe conosco</a></li>
+        <li><a href="#">Franquias</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="#">📍 Ilhéus, BA</a></li>
+        <li><a href="tel:+5573991731767">📞 (73) 9 9173-1767</a></li>
+        <li><a href="https://wa.me/5573991731767" target="_blank">💬 WhatsApp</a></li>
+        <li><a href="#">✉️ E-mail</a></li>
+        <li><a href="#">🕐 Seg–Dom 6h–22h</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Império do Cuscuz — Todos os direitos reservados</p>
+    <p>❤️ Feito com orgulho nordestino em Ilhéus, Bahia</p>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════
+     WHATSAPP FLUTUANTE
+═══════════════════════════════════ -->
+<a href="https://wa.me/5573991731767" target="_blank" class="whatsapp-btn" title="Fazer pedido pelo WhatsApp">💬</a>
+
+<!-- ═══════════════════════════════════
+     CARRINHO LATERAL
+═══════════════════════════════════ -->
+<div class="overlay" id="overlay" onclick="if(event.target===this) closeCart()">
+  <div class="cart-panel">
+    <div class="cp-header">
+      <h2>🛒 Meu Pedido</h2>
+      <button class="cp-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cp-body" id="cp-body">
+      <div class="cp-empty" id="cp-empty">
+        <span>🌽</span>
+        <p>Seu carrinho está vazio</p>
+        <small>Adicione itens do cardápio</small>
+      </div>
+      <div id="cp-items"></div>
+    </div>
+    <div class="cp-footer" id="cp-footer" style="display:none">
+      <div class="cp-subtotal">
+        <span>Subtotal</span>
+        <span id="cp-subtotal-val">R$ 0,00</span>
+      </div>
+      <div class="cp-subtotal">
+        <span>Entrega</span>
+        <span style="color:#2E7D32; font-weight:700">Grátis 🎉</span>
+      </div>
+      <div class="cp-total">
+        <span>Total</span>
+        <span id="cp-total-val">R$ 0,00</span>
+      </div>
+      <button class="btn-finalizar" onclick="finalizarPedido()">
+        🛵 Finalizar Pedido via WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     TOAST
+═══════════════════════════════════ -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════ -->
+<script src="js/app.js"></script>
+
+</body>
+</html>
