@@ -645,6 +645,16 @@ footer { background: var(--marrom); border-top: 2px solid var(--ouro); }
 .cp-item-price { font-family: 'Cinzel Decorative', cursive; font-size: 15px; font-weight: 700; color: var(--terracota); }
 .cp-remove { background: none; border: none; font-size: 15px; cursor: pointer; color: var(--cinza); padding: 4px; }
 .cp-remove:hover { color: var(--terracota); }
+.cp-qty-ctrl { display: flex; align-items: center; gap: 6px; background: var(--areia); border-radius: 8px; padding: 3px 6px; }
+.cp-qty-btn {
+  background: var(--marrom); color: var(--ouro);
+  border: none; border-radius: 5px;
+  width: 24px; height: 24px; font-size: 16px; line-height: 1;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s; font-weight: 700;
+}
+.cp-qty-btn:hover { background: var(--terracota); color: #fff; }
+.cp-qty-num { font-family: 'Cinzel Decorative', cursive; font-size: 13px; font-weight: 700; color: var(--marrom); min-width: 16px; text-align: center; }
 .cp-footer { padding: 18px; border-top: 2px solid var(--areia-dark); background: var(--branco); }
 .cp-subtotal { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 12px; color: var(--cinza); }
 .cp-total { display: flex; justify-content: space-between; font-family: 'Cinzel Decorative', cursive; font-size: 18px; font-weight: 700; color: var(--marrom); margin: 8px 0 16px; padding-top: 8px; border-top: 1.5px solid var(--areia-dark); }
@@ -1289,19 +1299,68 @@ footer { background: var(--marrom); border-top: 2px solid var(--ouro); }
    IMPÉRIO DO CUSCUZ — app.js
 ════════════════════════════════════════════ */
 
-let cart = [];
+// ─── BANCO DE DADOS LOCAL (localStorage) ───
+const DB_KEY = 'imperio_cuscuz_cart';
+
+function dbSave() {
+  const data = [...cart.entries()].map(([k, v]) => [k, v]);
+  localStorage.setItem(DB_KEY, JSON.stringify(data));
+}
+
+function dbLoad() {
+  try {
+    const raw = localStorage.getItem(DB_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    data.forEach(([k, v]) => cart.set(k, v));
+  } catch(e) { localStorage.removeItem(DB_KEY); }
+}
+
+// cart agora é um Map: chave = nome do produto, valor = { name, price, emoji, qty }
+let cart = new Map();
+dbLoad(); // ← restaura carrinho salvo
 
 /* ─── ADICIONAR AO CARRINHO ─── */
 function addItem(name, price, emoji) {
-  cart.push({ name, price, emoji });
+  if (cart.has(name)) {
+    cart.get(name).qty += 1;
+  } else {
+    cart.set(name, { name, price, emoji, qty: 1 });
+  }
+  dbSave();
   renderCart();
-  openCart();
-  showToast(`${emoji} ${name} adicionado!`);
+  // ❌ Não abre o carrinho — apenas mostra o toast
+  showToast(`${emoji} ${name} adicionado ao carrinho!`);
+  pulseCartIcon();
 }
 
-/* ─── REMOVER DO CARRINHO ─── */
-function removeItem(idx) {
-  cart.splice(idx, 1);
+/* ─── AUMENTAR QUANTIDADE ─── */
+function increaseQty(name) {
+  if (cart.has(name)) {
+    cart.get(name).qty += 1;
+    dbSave();
+    renderCart();
+  }
+}
+
+/* ─── DIMINUIR QUANTIDADE ─── */
+function decreaseQty(name) {
+  if (cart.has(name)) {
+    const item = cart.get(name);
+    if (item.qty > 1) {
+      item.qty -= 1;
+    } else {
+      cart.delete(name);
+    }
+    dbSave();
+    renderCart();
+  }
+}
+
+/* ─── REMOVER ITEM COMPLETAMENTE ─── */
+function removeItem(name) {
+  cart.delete(name);
+  dbSave();
   renderCart();
 }
 
@@ -1312,9 +1371,10 @@ function renderCart() {
   const footer = document.getElementById('cp-footer');
   const count  = document.getElementById('cart-count');
 
-  count.textContent = cart.length;
+  const totalQty = [...cart.values()].reduce((s, i) => s + i.qty, 0);
+  count.textContent = totalQty;
 
-  if (cart.length === 0) {
+  if (cart.size === 0) {
     empty.style.display  = 'flex';
     items.innerHTML      = '';
     footer.style.display = 'none';
@@ -1325,23 +1385,39 @@ function renderCart() {
   footer.style.display = 'block';
 
   let total = 0;
-  items.innerHTML = cart.map((item, i) => {
-    total += item.price;
+  items.innerHTML = [...cart.values()].map(item => {
+    const subtotal = item.price * item.qty;
+    total += subtotal;
+    const nameEsc = item.name.replace(/'/g, "\\'");
     return `
       <div class="cp-item">
         <span class="cp-item-icon">${item.emoji}</span>
         <div class="cp-item-info">
           <h4>${item.name}</h4>
-          <span>1 unidade</span>
+          <span>R$ ${item.price.toFixed(2).replace('.', ',')} / un.</span>
         </div>
-        <span class="cp-item-price">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
-        <button class="cp-remove" onclick="removeItem(${i})">✕</button>
+        <div class="cp-qty-ctrl">
+          <button class="cp-qty-btn" onclick="decreaseQty('${nameEsc}')">−</button>
+          <span class="cp-qty-num">${item.qty}</span>
+          <button class="cp-qty-btn" onclick="increaseQty('${nameEsc}')">+</button>
+        </div>
+        <span class="cp-item-price">R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
+        <button class="cp-remove" onclick="removeItem('${nameEsc}')" title="Remover">✕</button>
       </div>`;
   }).join('');
 
   const fmt = v => `R$ ${v.toFixed(2).replace('.', ',')}`;
   document.getElementById('cp-subtotal-val').textContent = fmt(total);
   document.getElementById('cp-total-val').textContent    = fmt(total);
+}
+
+/* ─── PULSAR ÍCONE DO CARRINHO ─── */
+function pulseCartIcon() {
+  const icon = document.querySelector('.cart-icon');
+  if (!icon) return;
+  icon.style.transition = 'transform 0.15s ease';
+  icon.style.transform = 'scale(1.35)';
+  setTimeout(() => { icon.style.transform = 'scale(1)'; }, 200);
 }
 
 /* ─── ABRIR / FECHAR CARRINHO ─── */
@@ -1391,13 +1467,19 @@ function copyCupom() {
 
 /* ─── FINALIZAR PEDIDO ─── */
 function finalizarPedido() {
-  if (cart.length === 0) return;
-  const items = cart.map(i =>
-    `- ${i.name}: R$ ${i.price.toFixed(2).replace('.', ',')}`
+  if (cart.size === 0) return;
+  const items = [...cart.values()].map(i =>
+    `- ${i.qty}x ${i.name}: R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}`
   ).join('%0A');
-  const total = cart.reduce((s, i) => s + i.price, 0);
+  const total = [...cart.values()].reduce((s, i) => s + i.price * i.qty, 0);
   const msg = `Olá! Quero fazer um pedido:%0A%0A${items}%0A%0ATotal: R$ ${total.toFixed(2).replace('.', ',')}`;
   window.open(`https://wa.me/5573991731767?text=${msg}`, '_blank');
+  // Limpa carrinho após enviar pedido
+  cart.clear();
+  dbSave();
+  renderCart();
+  closeCart();
+  showToast('✅ Pedido enviado! Aguarde o contato.');
 }
 
 /* ─── INIT ─── */
